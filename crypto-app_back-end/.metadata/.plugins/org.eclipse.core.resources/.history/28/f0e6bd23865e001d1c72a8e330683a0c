@@ -1,0 +1,87 @@
+package com.example.demo.repositoryTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.example.demo.model.WalletUsers;
+import com.example.demo.repository.WalletUserRepo;
+
+@SpringBootTest
+public class WalletUserRepoTest {
+		
+	@Autowired
+    private WalletUserRepo walletRepo;
+    private WalletUsers walletUsers;
+
+    @BeforeEach
+    public void setUp() {
+    	walletUsers = new WalletUsers();
+    	 walletUsers.setId("Roger5646@gmail.com");
+         walletUsers.setName("Roger");
+         walletUsers.setAddress("chennai");
+         walletUsers.setMobno((long) 1234567891);
+         walletUsers.setAccno((long) (4597953));
+         walletUsers.setPassword("William@04");
+
+    }
+    
+    @AfterEach
+    public void tearDown() {
+    	walletRepo.deleteAll();
+    	walletUsers = null;
+    }
+    
+    @Test
+    public void givenNetflixUserToSaveThenShouldReturnSavedNetflixUser() {
+    	walletRepo.save(walletUsers);
+    	WalletUsers fetchedUsers =walletRepo.findById(walletUsers.getId()).get();
+        assertEquals(19, fetchedUsers.getId().length());
+    }
+
+
+    @Test
+    public void givenGetAllNetflixUsersThenShouldReturnListOfAllNetflixUsers() {
+    	WalletUsers walletUsers = new WalletUsers("Roger5646@gmail.com", "Roger", "chennai", (long) 1234567891, (long) (4597953), "Root12345");
+    	WalletUsers walletUsers1 = new WalletUsers("Clem545@gmail.com", "Clem","Trichy",(long) 254136413, (long) (54641321),"Clement@04");
+    	walletRepo.save(walletUsers);
+    	walletRepo.save(walletUsers1);
+
+        List<WalletUsers> blogList = (List<WalletUsers>)  walletRepo.findAll();
+        assertEquals("Roger", blogList.get(1).getName());
+    }
+
+    @Test
+    public void givenNetflixUserIdThenShouldReturnRespectiveNetflixUser() {
+    	WalletUsers walletUsers = new WalletUsers("Roger5646@gmail.com", "Roger", "chennai", (long) 1234567891, (long) (4597953), "Root12345");
+    	WalletUsers walletUsers1 = walletRepo.save(walletUsers);
+        Optional<WalletUsers> optional = walletRepo.findById(walletUsers1.getId());
+        assertEquals(walletUsers1.getId(), optional.get().getId());
+        assertEquals(walletUsers1.getName(), optional.get().getName());
+        assertEquals(walletUsers1.getAddress(), optional.get().getAddress());
+        assertEquals(walletUsers1.getAccno(), optional.get().getAccno());
+        assertEquals(walletUsers1.getMobno(), optional.get().getMobno());
+        assertEquals(walletUsers1.getPassword(), optional.get().getPassword());
+
+    }
+    
+    @Test
+    public void givenNetflixUserIdToDeleteThenShouldReturnDeletedNetflixUser() {
+    	WalletUsers walletUsers = new WalletUsers("Roger5646@gmail.com", "Roger", "chennai", (long) 1234567891, (long) (4597953), "Root12345");
+    	walletRepo.save(walletUsers);
+    	walletRepo.deleteById(walletUsers.getId());
+        Optional optional = walletRepo.findById(walletUsers.getId());
+        assertEquals(Optional.empty(), optional);
+    }
+
+
+
+    
+}

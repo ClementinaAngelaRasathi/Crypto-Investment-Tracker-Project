@@ -1,0 +1,132 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.WalletUsers;
+import com.example.demo.service.WalletUserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@ExtendWith(MockitoExtension.class)
+public class WalletUserControllerTest {
+
+    private MockMvc mockMvc;
+    @Mock
+    WalletUserService walletService;
+    @InjectMocks
+    private WalletController walletController;
+
+    private WalletUsers walletUsers;
+    private List<WalletUsers> walletUserList;
+
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(walletController).build();
+        walletUsers = new WalletUsers();
+        walletUsers.setId("Roger5646@gmail.com");
+        walletUsers.setName("Roger");
+        walletUsers.setAddress("chennai");
+        walletUsers.setMobno((long) 1234567891);
+        walletUsers.setAccno((long) (4597953));
+        walletUsers.setPassword("William@04");
+
+        walletUserList = new ArrayList<>();
+        walletUserList.add(walletUsers);
+    }
+
+    @AfterEach
+    public void tearDown() {
+    	walletUsers = null;
+    }
+
+    @Test
+    public void givenNetflixUserToSaveThenShouldReturnSavedNetflixUsers() throws Exception {
+        when(walletService.registerUser(any())).thenReturn(walletUsers);
+        mockMvc.perform(post("/walletusers")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(walletUsers)))
+                .andExpect(status().isCreated())
+                .andDo(MockMvcResultHandlers.print());
+        verify(walletService).registerUser(any());
+    }
+
+    @Test
+    public void givenGetAllNetflixUsersThenShouldReturnListOfAllNetflixUsers() throws Exception {
+        when(walletService.getAllUser()).thenReturn(walletUserList);
+        mockMvc.perform(MockMvcRequestBuilders.get("/walletusers")
+                .contentType(MediaType.APPLICATION_JSON).content(asJsonString(walletUsers)))
+                .andDo(MockMvcResultHandlers.print());
+        verify(walletService).getAllUser();
+        verify(walletService, times(1)).getAllUser();
+
+    }
+
+    @Test
+    void givenNetflixUserIdThenShouldReturnRespectiveNetflixUser() throws Exception {
+        when(walletService.findUserbyId(walletUsers.getId())).thenReturn(walletUsers);
+        mockMvc.perform(get("/walletusers/Roger5646@gmail.com"))
+                .andExpect(MockMvcResultMatchers.status()
+                        .isOk())
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    public void givenNetflixUserIdToDeleteThenShouldNotReturnDeletedNetflixUser() throws Exception {
+        when(walletService.deleteAUser(walletUsers.getId())).thenReturn(walletUsers);
+        mockMvc.perform(delete("/walletusers/Roger5646@gmail.com")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(walletUsers)))
+                .andExpect(MockMvcResultMatchers.status().isAccepted()).andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void givenNetflixUserToUpdateThenShouldReturnUpdatedNetflixUser() throws Exception {
+        when(walletService.updateAUser(any())).thenReturn(walletUsers);
+        mockMvc.perform(put("/walletusers").contentType(MediaType.APPLICATION_JSON).content(asJsonString(walletUsers)))
+                .andExpect(status().isCreated()).andDo(MockMvcResultHandlers.print());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+

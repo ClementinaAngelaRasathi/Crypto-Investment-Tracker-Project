@@ -1,0 +1,28 @@
+/**
+* Report Section
+*/
+.reports-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.reports-section h2 {     
+    margin: 15px 0;
+    font-size: 250%;
+    font-weight: 300; 
+    color: #0984e3;
+}
+
+.reports-section h3 { 
+    font-size: 150%;
+    font-weight: 300; 
+    color: #458dc4;
+}
+
+.reports-section ol li {
+    padding: 5px 0;
+    font-size: 110%;
+    color: #f6e9e9;
+}

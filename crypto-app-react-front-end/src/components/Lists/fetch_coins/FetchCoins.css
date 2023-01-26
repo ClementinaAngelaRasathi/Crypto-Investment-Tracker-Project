@@ -1,0 +1,16 @@
+/**
+* Coins Section
+*/
+.coins-section {
+    display: flex;
+    justify-content: center;
+    align-items:baseline;
+    flex-wrap: wrap;
+}
+
+h2 { margin: 15px 0; }
+
+/* Media queries */
+@media only screen and (max-width: 480px) {
+    .coins-section { padding-bottom: 30%; }
+}

@@ -1,0 +1,35 @@
+/**
+* More Info
+*/
+.info-container img {
+    display: block;
+    margin: 0 auto;
+}
+
+.info-container {
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    width: auto;
+    height: 50px;
+    margin-top: 25px;
+    padding: 10px 0;
+}
+
+.info-container p { 
+    margin: 0;
+    padding: 15px;
+}
+
+.info-container p span { 
+    display: inline-block;
+    font-weight: bold;
+}
+
+/* Media queries */
+@media only screen and (max-width: 480px) {
+    .info-container {
+        justify-content: flex-start;  
+        width: 0px;
+    }
+}

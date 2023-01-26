@@ -1,0 +1,110 @@
+/**
+* Modal
+*/
+.modal-contaienr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(1px);
+}
+
+.modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    width: 550px;
+    height: 550px;
+    margin: 0 10px;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal-header h2 {
+    text-transform: uppercase;
+    font-size: 250%;
+    font-weight: 300;
+    color: #3498db;
+}
+
+.modal-header p {
+    width: 60%;
+    text-align: center;
+    font-size: 120%;
+    color: #3498db;
+}
+
+.modal-toggle{ 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 2px solid #3498db;
+}
+
+.modal-toggle:last-child{ border-bottom: none;}
+
+.modal-toggle p {
+    text-transform: uppercase; 
+    font-weight: 300;
+    font-size: 135%;
+    color: #3498db;
+}
+
+.modal-toggle label:hover { opacity: 0.9;}
+
+/**
+* Close Button
+*/
+.close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid #3498db;
+    outline: none;
+    font-size: 110%;
+    font-weight: bold;
+    background-color: transparent;
+    color: #3498db;
+    transition: opacity 0.4s;
+    cursor: pointer;
+}
+
+.close-button:hover { opacity: 0.8; }
+
+/**
+* Modal handler
+*/
+.hidden-modal { display: none; }
+.active-modal { display: block; }
+
+/* Media queries */
+@media only screen and (max-width: 480px) {
+    .modal-header p { 
+        margin-bottom: 20px;
+        width: 80%;
+    }
+}

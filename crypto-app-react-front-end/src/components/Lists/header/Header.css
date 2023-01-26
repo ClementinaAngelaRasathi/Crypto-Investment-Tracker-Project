@@ -1,0 +1,26 @@
+/**
+* Header Section
+*/
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 50px 20px;
+    border-bottom: 3px solid #dfe6e9;
+    background-color: #2d3436;
+  }
+  
+  .logo {
+    width: 120px;
+    height: auto;
+  }
+  
+  h1 { 
+    text-transform: uppercase;
+    font-size: 260%;
+    font-weight: 500; 
+    color: #f9f9f9
+  }
+  
+  h1 span { text-transform: lowercase; }
